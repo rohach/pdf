@@ -1,0 +1,213 @@
+.pdf-tool {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #f4f4f9;
+}
+
+/* Intro Section */
+.intro {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.intro h2 {
+  font-size: 36px;
+  color: #334437;
+  margin-bottom: 10px;
+}
+
+.intro p {
+  font-size: 18px;
+  color: #555;
+}
+
+/* Cards / Actions Section */
+.actions {
+  margin: 40px 0;
+}
+
+.actions h3 {
+  text-align: center;
+  font-size: 28px;
+  color: #334437;
+  margin-bottom: 30px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card h4 {
+  color: #334437;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.card input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.card button {
+  background-color: #4b4943;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.card button:hover {
+  background-color: #334437;
+}
+
+/* Output Section */
+.output-section {
+  margin: 40px 0;
+}
+
+.output-file {
+  margin-bottom: 30px;
+}
+
+.file-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.download-btn {
+  background: #4b4943;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background: #334437;
+}
+
+.cancel-btn {
+  background: #ff4b5c;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background: #e03b4b;
+}
+
+/* Benefits Section */
+.benefits,
+.tips {
+  background-color: #fff;
+  padding: 30px 20px;
+  border-radius: 15px;
+  margin-bottom: 40px;
+}
+
+.benefits h3,
+.tips h3 {
+  color: #334437;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.benefits ul,
+.tips ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #555;
+}
+/* Benefits Section */
+.benefits,
+.tips {
+  background-color: #fff;
+  padding: 40px 20px;
+  border-radius: 15px;
+  margin-bottom: 40px;
+}
+
+.benefits h3,
+.tips h3 {
+  text-align: center;
+  color: #334437;
+  margin-bottom: 30px;
+}
+
+.benefits-container,
+.tips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.benefit-card,
+.tip-card {
+  background: #f9f9f9;
+  width: 220px;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.benefit-card:hover,
+.tip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-card img,
+.tip-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.benefit-card h4,
+.tip-card h4 {
+  color: #334437;
+  margin-bottom: 10px;
+}
+
+.benefit-card p,
+.tip-card p {
+  color: #555;
+  font-size: 14px;
+}

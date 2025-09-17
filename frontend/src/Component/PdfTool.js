@@ -43,13 +43,16 @@ const tipsData = [
   },
 ];
 
+// 👇 Use environment variable
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 const PdfTool = () => {
   const [mergeFiles, setMergeFiles] = useState([]);
   const [splitFile, setSplitFile] = useState(null);
   const [compressFile, setCompressFile] = useState([]);
   const [outputLinks, setOutputLinks] = useState([]);
 
-  const sendFormData = async (url, files, key = "pdf") => {
+  const sendFormData = async (endpoint, files, key = "pdf") => {
     if (!files || files.length === 0) return alert("Please select a file!");
     const formData = new FormData();
     if (files.length > 1) {
@@ -59,12 +62,15 @@ const PdfTool = () => {
     }
 
     try {
-      const res = await fetch(url, { method: "POST", body: formData });
+      const res = await fetch(`${API_URL}${endpoint}`, {
+        method: "POST",
+        body: formData,
+      });
       const data = await res.json();
 
       if (res.ok && data.files) {
         const filesWithName = data.files.map((f) => ({
-          url: `http://localhost:5000${f}`,
+          url: `${API_URL}${f}`,
           name: f.split("/").pop(),
         }));
         setOutputLinks(filesWithName);
@@ -105,13 +111,7 @@ const PdfTool = () => {
               onChange={(e) => setMergeFiles(e.target.files)}
             />
             <button
-              onClick={() =>
-                sendFormData(
-                  "http://localhost:5000/api/pdf/merge",
-                  mergeFiles,
-                  "pdfs"
-                )
-              }
+              onClick={() => sendFormData("/api/pdf/merge", mergeFiles, "pdfs")}
             >
               Merge PDFs
             </button>
@@ -125,11 +125,7 @@ const PdfTool = () => {
               accept="application/pdf"
               onChange={(e) => setSplitFile(e.target.files)}
             />
-            <button
-              onClick={() =>
-                sendFormData("http://localhost:5000/api/pdf/split", splitFile)
-              }
-            >
+            <button onClick={() => sendFormData("/api/pdf/split", splitFile)}>
               Split PDF
             </button>
           </div>
@@ -143,12 +139,7 @@ const PdfTool = () => {
               onChange={(e) => setCompressFile(e.target.files)}
             />
             <button
-              onClick={() =>
-                sendFormData(
-                  "http://localhost:5000/api/pdf/compress",
-                  compressFile
-                )
-              }
+              onClick={() => sendFormData("/api/pdf/compress", compressFile)}
             >
               Compress PDF
             </button>

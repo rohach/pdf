@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../styles/PdfTool.css";
 
-// You can replace these URLs with your own hosted icons/images
 const benefitsData = [
   {
     img: "https://img.icons8.com/color/96/free/cloud.png",
@@ -43,22 +42,27 @@ const tipsData = [
   },
 ];
 
-// 👇 Use environment variable
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 const PdfTool = () => {
   const [mergeFiles, setMergeFiles] = useState([]);
   const [splitFile, setSplitFile] = useState(null);
-  const [compressFile, setCompressFile] = useState([]);
+  const [compressFile, setCompressFile] = useState(null);
   const [outputLinks, setOutputLinks] = useState([]);
 
-  const sendFormData = async (endpoint, files, key = "pdf") => {
-    if (!files || files.length === 0) return alert("Please select a file!");
+  const sendFormData = async (endpoint, files, key = "pdfs") => {
+    if (!files || files.length === 0) {
+      return alert("Please select a file!");
+    }
+
     const formData = new FormData();
-    if (files.length > 1) {
-      for (const file of files) formData.append(key, file);
+
+    if (files instanceof FileList || Array.isArray(files)) {
+      for (const file of files) {
+        formData.append(key, file);
+      }
     } else {
-      formData.append(key, files[0]);
+      formData.append(key, files);
     }
 
     try {
@@ -66,16 +70,21 @@ const PdfTool = () => {
         method: "POST",
         body: formData,
       });
+
+      if (!res.ok) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+      }
+
       const data = await res.json();
 
-      if (res.ok && data.files) {
+      if (data.files) {
         const filesWithName = data.files.map((f) => ({
           url: `${API_URL}${f}`,
           name: f.split("/").pop(),
         }));
         setOutputLinks(filesWithName);
-      } else if (!res.ok) {
-        alert(data.message || "Server error");
+      } else {
+        alert("No files returned from server.");
       }
     } catch (err) {
       alert("Error: " + err.message);
@@ -88,7 +97,6 @@ const PdfTool = () => {
 
   return (
     <div className="pdf-tool">
-      {/* Intro Section */}
       <section className="intro">
         <h2>Welcome to Simple PDF Tool</h2>
         <p>
@@ -97,7 +105,6 @@ const PdfTool = () => {
         </p>
       </section>
 
-      {/* PDF Actions Section */}
       <section className="actions">
         <h3>📄 PDF Tools</h3>
         <div className="card-container">
@@ -123,9 +130,11 @@ const PdfTool = () => {
             <input
               type="file"
               accept="application/pdf"
-              onChange={(e) => setSplitFile(e.target.files)}
+              onChange={(e) => setSplitFile(e.target.files[0])}
             />
-            <button onClick={() => sendFormData("/api/pdf/split", splitFile)}>
+            <button
+              onClick={() => sendFormData("/api/pdf/split", splitFile, "pdf")}
+            >
               Split PDF
             </button>
           </div>
@@ -136,10 +145,12 @@ const PdfTool = () => {
             <input
               type="file"
               accept="application/pdf"
-              onChange={(e) => setCompressFile(e.target.files)}
+              onChange={(e) => setCompressFile(e.target.files[0])}
             />
             <button
-              onClick={() => sendFormData("/api/pdf/compress", compressFile)}
+              onClick={() =>
+                sendFormData("/api/pdf/compress", compressFile, "pdf")
+              }
             >
               Compress PDF
             </button>
@@ -147,7 +158,6 @@ const PdfTool = () => {
         </div>
       </section>
 
-      {/* Output Section */}
       {outputLinks.length > 0 && (
         <section className="output-section">
           <h3>Processed Files</h3>
@@ -192,7 +202,6 @@ const PdfTool = () => {
         </section>
       )}
 
-      {/* Benefits Section */}
       <section className="benefits">
         <h3>Why Use Simple PDF Tool?</h3>
         <div className="benefits-container">
@@ -206,7 +215,6 @@ const PdfTool = () => {
         </div>
       </section>
 
-      {/* Tips Section */}
       <section className="tips">
         <h3>Tips & Notes</h3>
         <div className="tips-container">
